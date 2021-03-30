@@ -8,16 +8,25 @@ class Movies(models.Model):
     release_year = models.DateField()
     maturity_rating = models.CharField(max_length=10)
     duration = models.IntegerField()
-    views =models.IntegerField()
+    views =models.IntegerField(deafult=0)
     rate = models.FloatField()
-    #trailer
-    # category
+    director = models.CharField(max_length=100)
     #writer
-    #director 
-    #actors 
-    # video = models.FileField()
-    # poster = models.ImageField()
+
+    trailer =models.CharField()
+    video = models.CharField()
+    poster = models.CharField()
+
+    # category many to many 
+    #actors many to amn 
 
     def __str__(self):
         return self.name
 
+
+class Actors(models.Model):
+    name = models.CharField(max_length=100)
+ 
+
+class Genre(model.Model):
+    name = models.CharField(max_length=100)
