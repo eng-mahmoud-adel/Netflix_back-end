@@ -33,6 +33,7 @@ class Episodes(models.Model):
     series_id = models.ForeignKey(Series)
     img = models.URLField()
     video = models.URLField()
+    #trailer
     def __str__(self):
         return self.name
 

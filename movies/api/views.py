@@ -47,7 +47,14 @@ class moviesList(generics.ListAPIView):
     serializer_class = MovieSerializers
     def get_queryset(self):
         queryset = Movies.objects.all()
+
+        
         name=self.request.query_params.get('name')
         if name is not None:
             queryset = queryset.filter(name__icontains=name)
         return queryset
+
+
+# name=self.request.query_params.get('name')
+#        if name is not None:
+#             queryset = queryset.filter(name__icontains=name)
