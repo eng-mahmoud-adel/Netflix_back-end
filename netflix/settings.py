@@ -1,3 +1,4 @@
+
 """
 Django settings for netflix project.
 
@@ -32,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'movies',
+    'Series',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,10 +82,10 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'netflix',
+        'NAME': 'Netflex',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '127.0.0.1',
+        'PASSWORD': '123456789',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
