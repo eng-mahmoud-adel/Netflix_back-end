@@ -10,7 +10,7 @@ class Series(models.Model):
     date = models.DateField()
     maturity_rating = models.CharField(max_length=5)
     img = models.URLField()
-    video = models.URLField(upload_to='series/videos')
+    video = models.URLField()
     #trailer
     def __str__(self):
         return self.name
