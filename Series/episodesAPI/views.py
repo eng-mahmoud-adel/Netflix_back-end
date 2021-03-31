@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from Series.models import Episodes
-from .serializers import SeriesSerializer
+from .serializers import EpisodesSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework import generics
@@ -8,12 +8,12 @@ from rest_framework import generics
 @api_view(["GET",])
 def index(request):
     episode = Episodes.objects.all()
-    serializer = SeriesSerializer(instance=episode, many=True)
+    serializer = EpisodesSerializer(instance=episode, many=True)
     return Response(data=serializer.data,status=status.HTTP_200_OK)
 
 @api_view(["POST",])
 def create(request):
-    serializer = SeriesSerializer(data=request.data)
+    serializer = EpisodesSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(data={
@@ -28,7 +28,7 @@ def create(request):
 @api_view(["PUT",])
 def update(request,pk):
     episode = Episodes.objects.get(pk=pk)
-    serializer = SeriesSerializer(data=request.data,instance=episode)
+    serializer = EpisodesSerializer(data=request.data,instance=episode)
     if serializer.is_valid():
         serializer.save()
         return Response(data={
@@ -52,9 +52,9 @@ def delete(request,pk):
 class RetrieveEpisode(generics.RetrieveAPIView):
     lookup_field = 'pk'
     queryset = Episodes.objects.all()
-    serializer_class = SeriesSerializer
+    serializer_class = EpisodesSerializer
 
 class DeleteEpisode(generics.DestroyAPIView):
     lookup_field = 'pk'
     queryset = Episodes.objects.all()
-    serializer_class = SeriesSerializer
+    serializer_class = EpisodesSerializer
