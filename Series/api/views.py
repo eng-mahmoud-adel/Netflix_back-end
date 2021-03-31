@@ -1,14 +1,14 @@
-from rest_framework import Response
+from rest_framework.response import Response
 from Series.models import Series
 from .serializers import SeriesSerializer
 from rest_framework import status
-from rest_framework.decorators import api_views
+from rest_framework.decorators import api_view
 from rest_framework import generics
 
 
 
-class SeriesList(generic.ListAPIView):
-    queryset = 	Series.Objects.all()    
+class SeriesList(generics.ListAPIView):
+    queryset = 	Series.objects.all()
     def get_queryset(self):
         queryset = Series.objects.all()
         name=self.request.query_params.get('name')
@@ -16,9 +16,9 @@ class SeriesList(generic.ListAPIView):
             queryset = queryset.filter(name__icontains=name)
         return queryset
 
-class CreateSeries(generic.CreateAPIView):
-    queryset = 	Series.Objects.all()  
-    serializer_class= SeriesSerializer
+#class CreateSeries(generics.CreateAPIView):
+#    queryset = 	Series.objects.all()
+#    serializer_class= SeriesSerializer
 
 
 # class DeleteSeries(generic.DestroyAPIView):
@@ -26,25 +26,25 @@ class CreateSeries(generic.CreateAPIView):
 #     serializer_class= SeriesSerializer
 
 
-@api_view(["GET,"])
+@api_view(["GET",])
 def index(request):
-    serie=Series.object.all()  
-    serializer = SeriesSerializer(instance=serie, many=True) 
-    return Response(data=serializer.data, status=status.HTTP_200_OK)	
+    series=Series.objects.all()
+    serializer = SeriesSerializer(instance=series, many=True)
+    return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-# @api_view(["POST,"])
-# def create(request):
-#     serializer = SeriesSerializer(data=request.data)
-#     if serializer.is_valid():
-#         serializer.save()
-#         return Response(data={
-# 	    "success":True
-# 	    "message": "Series has been added"
-# 	}, status=status.HTTP_200_OK)
-#     return Response(data={
-# 	    "success":False
-# 	    "errors": serializer.errors
-# 	}, status=status.HTTP_400_BAD_REQUEST)
+@api_view(["POST",])
+def create(request):
+     serializer = SeriesSerializer(data=request.data)
+     if serializer.is_valid():
+         serializer.save()
+         return Response(data={
+ 	    "success":True,
+ 	    "message": "Series has been added"
+ 	}, status=status.HTTP_200_OK)
+     return Response(data={
+ 	    "success":False,
+ 	    "errors": serializer.errors
+ 	}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -70,8 +70,8 @@ def update(request, id):
 
 
 @api_view(["DELETE"])
-def delete(request, id):
-    serie=Series.objects.get(pk=id)
+def delete(request, pk):
+    serie=Series.objects.get(pk=pk)
     serie.delete()
     return Response(data=
         {

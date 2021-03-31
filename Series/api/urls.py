@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns= [
     path("",views.index),
-    path("create",CreateSeries.as_view()),
+    path("create",views.create),
     path("delete/<int:pk>", views.delete),
     path("update/<int:id>",views.update),
     re_path('search', views.SeriesList.as_view()),

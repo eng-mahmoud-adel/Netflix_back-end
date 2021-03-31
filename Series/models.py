@@ -1,5 +1,6 @@
 from django.db import models
 from movies.models import Actors, Genre, Movies
+from . import views
 # Create your models here.
 
 class Series(models.Model):
@@ -19,7 +20,7 @@ class Series(models.Model):
 
 
 class Creators(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     def __str__(self):
         return self.name
 
@@ -30,10 +31,10 @@ class Episodes(models.Model):
     duration = models.IntegerField()
     seasons = models.IntegerField()
     episode_number = models.IntegerField()
-    series_id = models.ForeignKey(Series)
+    series_id = models.ForeignKey(Series, on_delete=models.CASCADE)
     img = models.URLField()
     video = models.URLField()
-    #trailer
+    #trailer =models.URLField(max_length=100)
     def __str__(self):
         return self.name
 
