@@ -53,3 +53,8 @@ class RetrieveEpisode(generics.RetrieveAPIView):
     lookup_field = 'pk'
     queryset = Episodes.objects.all()
     serializer_class = SeriesSerializer
+
+class DeleteEpisode(generics.DestroyAPIView):
+    lookup_field = 'pk'
+    queryset = Episodes.objects.all()
+    serializer_class = SeriesSerializer

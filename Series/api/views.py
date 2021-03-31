@@ -69,20 +69,24 @@ def update(request, id):
         status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(["DELETE"])
-def delete(request, pk):
-    serie=Series.objects.get(pk=pk)
-    serie.delete()
-    return Response(data=
-        {
-            "Success:": True,
-            "message": "Series has been deleted"
-        },
-        status=status.HTTP_204_NO_CONTENT)
+# @api_view(["DELETE"])
+# def delete(request, pk):
+#     serie=Series.objects.get(pk=pk)
+#     serie.delete()
+#     return Response(data={
+#         "success":True,
+#         "message":"Series Has Been Deleted"
+#     },status=status.HTTP_204_NO_CONTENT)
 
 
 
 class RetrieveSeries(generics.RetrieveAPIView):
+    lookup_field = 'pk'
+    queryset = Series.objects.all()
+    serializer_class = SeriesSerializer
+
+
+class DeleteSeries(generics.DestroyAPIView):
     lookup_field = 'pk'
     queryset = Series.objects.all()
     serializer_class = SeriesSerializer
