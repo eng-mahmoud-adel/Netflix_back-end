@@ -21,7 +21,7 @@ class SeriesList(generics.ListAPIView):
 #    serializer_class= SeriesSerializer
 
 
-# class DeleteSeries(generic.DestroyAPIView):
+# class DeleteSeries(generics.DestroyAPIView):
 #     queryset = 	Series.Objects.all()  
 #     serializer_class= SeriesSerializer
 
@@ -79,3 +79,10 @@ def delete(request, pk):
             "message": "Series has been deleted"
         },
         status=status.HTTP_204_NO_CONTENT)
+
+
+
+class RetrieveSeries(generics.RetrieveAPIView):
+    lookup_field = 'pk'
+    queryset = Series.objects.all()
+    serializer_class = SeriesSerializer

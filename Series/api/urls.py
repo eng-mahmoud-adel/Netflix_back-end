@@ -8,4 +8,6 @@ urlpatterns= [
     path("delete/<int:pk>", views.delete),
     path("update/<int:id>",views.update),
     re_path('search', views.SeriesList.as_view()),
+    path("<int:pk>", views.RetrieveSeries.as_view()),
+
 ]

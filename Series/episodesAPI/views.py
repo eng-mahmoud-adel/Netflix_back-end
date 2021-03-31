@@ -48,3 +48,8 @@ def delete(request,pk):
         "success":True,
         "message":"Episode Has Been Deleted"
     },status=status.HTTP_204_NO_CONTENT)
+
+class RetrieveEpisode(generics.RetrieveAPIView):
+    lookup_field = 'pk'
+    queryset = Episodes.objects.all()
+    serializer_class = SeriesSerializer
