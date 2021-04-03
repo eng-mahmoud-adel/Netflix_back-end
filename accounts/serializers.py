@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
-
+from .models import Profile
 
 class UserSerializer(serializers.ModelSerializer):
     # terms = serializers.BooleanField(default=False)
@@ -24,3 +24,9 @@ class UserSerializer(serializers.ModelSerializer):
         print(user)
         Token.objects.get_or_create(user=user)
         print(Token.objects.get(user=user))
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
+        # fields= ('name',)

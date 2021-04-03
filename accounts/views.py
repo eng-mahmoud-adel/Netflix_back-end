@@ -1,13 +1,14 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import generics,viewsets 
 #from django.contrib.auth.models import User, Group
-from .serializers import UserSerializer
+from .serializers import UserSerializer,ProfileSerializer
 from rest_framework.decorators import api_view ,permission_classes
 #from authentication.permissions import IsNotAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import login,authenticate
-
+from .models import Profile
 
 
 
@@ -46,6 +47,66 @@ def api_signup(request):
     },status=status.HTTP_400_BAD_REQUEST)
 
 
+
+###### get all profiles for one account
+
+@api_view(['get'])
+def api_profiles(request,user):
+    try:
+        profile = Profile.objects.filter(user_set= user)
+        serializer = ProfileSerializer(profile,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response(data={
+            "success":False,
+            "errors":str(e)
+        },status=status.HTTP_404_NOT_FOUND)
+
+###### get one profile for one account
+
+@api_view(['get'])
+def api_profile(request,id):
+    try:
+        profile = Profile.objects.get(id = id)
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response(data={
+            "success":False,
+            "errors":str(e)
+        },status=status.HTTP_404_NOT_FOUND)
+
+
+###### create profile for one account
+
+@api_view(['post'])
+def create_profile(request):
+    serializer = ProfileSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+    return Response(data={
+        "success":False,
+        "errors":serializer.errors
+    },status=status.HTTP_404_NOT_FOUND)
+
+
+###### update and delete profile for one account
+
+@api_view(['PUT','DELETE'])
+def up_del_profile(request,id):
+    profile = Profile.objects.get(id = id)
+    if request.method == 'PUT':
+        serializer = ProfileSerializer(profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        profile.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # class IsManager(BasePermission):
 #     # group = Group(name = "Manager")
