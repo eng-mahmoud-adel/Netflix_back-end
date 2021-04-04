@@ -5,17 +5,17 @@ from movies.models import Movies,Actors ,Genre,Writer
 class ActorSerializers(serializers.ModelSerializer):
     class Meta:
         model =Actors
-        fields= ('name',)
+        fields= '__all__'
 
 class GenreSerializers(serializers.ModelSerializer):
     class Meta:
         model =Genre
-        fields= ('name',)
+        fields= '__all__'
 
 class WriteSerializers(serializers.ModelSerializer):
     class Meta:
         model =Writer
-        fields= ('name',)
+        fields= '__all__'
 
 class MovieSerializers(serializers.ModelSerializer):
     actors = ActorSerializers(many=True,read_only=True)
@@ -24,4 +24,4 @@ class MovieSerializers(serializers.ModelSerializer):
 
     class Meta:
         model =Movies
-        fields= ('id','name','description','release_year','maturity_rating','duration','views','rate','director','trailer','video','poster','writers','genres' ,'actors')
+        fields= '__all__'
