@@ -8,4 +8,9 @@ urlpatterns=[
      path('auth/', include('rest_auth.urls')),
      # signup
      path('auth/register/', include('rest_auth.registration.urls')), 
+     # profiles
+     path('profiles/',views.profiles),
+     path('profile/<int:id>',views.profile),
+     path('create_profile',views.create_profile),
+     path('update_delete_profile/<int:id>',views.update_delete_profile),
 ]
