@@ -10,12 +10,9 @@ from rest_framework.pagination import PageNumberPagination
 @api_view(["GET","POST"])
 def index(request):
     if request.method=='GET':
-        paginator = PageNumberPagination()
-        paginator.page_size = 10
         movies = Movies.objects.all()
-        result_page = paginator.paginate_queryset(movies, request)
-        serializer = MovieSerializers(result_page,many=True)
-        return paginator.get_paginated_response(serializer.data)
+        serializer = MovieSerializers(movies,many=True)
+        return Response(data=serializer.data,status=status.HTTP_200_OK)
     elif request.method=='POST':
         serializer=MovieSerializers(data=request.data)
         if serializer.is_valid():

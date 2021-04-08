@@ -30,7 +30,7 @@ class Movies(models.Model):
 
     trailer =models.URLField(max_length=100)
     video = models.URLField(max_length=100)
-    poster = models.URLField(max_length=100)
+    img = models.URLField(max_length=100)
 
     writers =models.ManyToManyField(Writer)
     genres = models.ManyToManyField(Genre)
