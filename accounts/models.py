@@ -17,4 +17,9 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
         print(str(instance.id))
+
+class Payment(models.Model):
+    plan_type = models.CharField(max_length=50)
+    price = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
         

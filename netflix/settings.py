@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.admin',
@@ -51,6 +54,35 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '263908953022-d0ggii3ciag736kft9iog3dajvvanqlt.apps.googleusercontent.com',
+            'secret': '3mLQa_xQTTQWRiOo2psGD1ZI',
+            'key': ''
+        }
+    },
+    'facebook': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            # 'client_id': '',
+            # 'secret': '',
+            # 'key': ''
+        }
+    }
+}
+
+# REST_AUTH_SERIALIZERS = {
+#     'PASSWORD_RESET_SERIALIZER': 'rest_auth.serializers.PasswordResetSerializer',
+#     'PASSWORD_RESET_CONFIRM_SERIALIZER': 'rest_auth.serializers.PasswordResetConfirmSerializer',
+# }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -129,9 +161,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-ACCOUNT_AUTHENTICATION_METHOD = "email"
+# Here we tell allauth to use our adapter from above
+ACCOUNT_ADAPTER = 'myapp.adapter.AccountAPIAdapter'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -141,7 +178,15 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'notifier.django@gmail.com'
+EMAIL_HOST_PASSWORD = ';lkjfdsaQWERT'
+EMAIL_USE_TLS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

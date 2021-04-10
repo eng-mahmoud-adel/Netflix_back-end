@@ -21,5 +21,6 @@ urlpatterns = [
     path('api/accounts/', include('accounts.urls')),
     path('api/movies/',include('movies.api.urls')),
     path('api/series/',include('Series.api.urls')),
-    path('api/episodes/',include('Series.episodesAPI.urls'))
+    path('api/episodes/',include('Series.episodesAPI.urls')),
+    path('', include('django.contrib.auth.urls')),
 ]
