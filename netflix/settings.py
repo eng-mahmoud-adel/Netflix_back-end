@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'accounts',
     'movies',
     'Series',
+    'corsheaders',
     'rest_auth',
     'django.contrib.sites',
     'allauth',
@@ -96,6 +97,7 @@ REST_FRAMEWORK = {
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -135,8 +137,8 @@ DATABASES = {
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'netflix',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'USER': 'django',
+        'PASSWORD': '123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
