@@ -37,15 +37,16 @@ INSTALLED_APPS = [
     'movies',
     'Series',
     'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
     'rest_auth',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'rest_auth.registration',
     'allauth.socialaccount',
     # 'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
-    'rest_framework',
-    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,8 +64,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': '263908953022-d0ggii3ciag736kft9iog3dajvvanqlt.apps.googleusercontent.com',
-            'secret': '3mLQa_xQTTQWRiOo2psGD1ZI',
+            'client_id': '263908953022-4tdu5pighgll2juksrb0296o66tiugvg.apps.googleusercontent.com',
+            'secret': 'Ccv8GmPpGrNcVYqBBIbeHsGo',
             'key': ''
         }
     },
@@ -79,11 +80,6 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-
-# REST_AUTH_SERIALIZERS = {
-#     'PASSWORD_RESET_SERIALIZER': 'rest_auth.serializers.PasswordResetSerializer',
-#     'PASSWORD_RESET_CONFIRM_SERIALIZER': 'rest_auth.serializers.PasswordResetConfirmSerializer',
-# }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -137,8 +133,8 @@ DATABASES = {
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'netflix',
-        'USER': 'django',
-        'PASSWORD': '123',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -164,8 +160,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Here we tell allauth to use our adapter from above
-ACCOUNT_ADAPTER = 'myapp.adapter.AccountAPIAdapter'
-
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False

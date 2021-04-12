@@ -6,8 +6,6 @@ urlpatterns=[
      path("auth/logout/", views.Logout.as_view()),
      # login
      path('auth/', include('rest_auth.urls')),
-     # social login
-     # path('accounts/', include('allauth.urls')),
      # signup
      path('auth/register/', include('rest_auth.registration.urls')),
      # profiles
