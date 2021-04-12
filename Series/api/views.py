@@ -4,11 +4,13 @@ from .serializers import SeriesSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework import generics
-
+from rest_framework.decorators import  permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 
 class SeriesList(generics.ListAPIView):
     queryset = 	Series.objects.all()
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
         queryset = Series.objects.all()
         name=self.request.query_params.get('name')
@@ -27,12 +29,14 @@ class SeriesList(generics.ListAPIView):
 
 
 @api_view(["GET",])
+@permission_classes([IsAuthenticated,])
 def index(request):
     series=Series.objects.all()
     serializer = SeriesSerializer(instance=series, many=True)
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 @api_view(["POST",])
+@permission_classes([IsAuthenticated,])
 def create(request):
      serializer = SeriesSerializer(data=request.data)
      if serializer.is_valid():
@@ -49,6 +53,7 @@ def create(request):
 
 
 @api_view(["POST","PUT"])
+@permission_classes([IsAuthenticated,])
 def update(request, id):
     serie=Series.objects.get(pk=id)
     serializer= SeriesSerializer(data=request.data, instance=serie)
@@ -81,12 +86,14 @@ def update(request, id):
 
 
 class RetrieveSeries(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
     lookup_field = 'pk'
     queryset = Series.objects.all()
     serializer_class = SeriesSerializer
 
 
 class DeleteSeries(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
     lookup_field = 'pk'
     queryset = Series.objects.all()
     serializer_class = SeriesSerializer

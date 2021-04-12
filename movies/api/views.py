@@ -4,10 +4,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-
+from rest_framework.decorators import  permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 
 @api_view(["GET","POST"])
+@permission_classes([IsAuthenticated,])
 def index(request):
     if request.method=='GET':
         movies = Movies.objects.all()
@@ -22,6 +24,7 @@ def index(request):
 
 
 @api_view(["GET","PUT","DELETE"])
+@permission_classes([IsAuthenticated,])
 def edit(request,pk):
     try:
         movie=Movies.objects.get(pk=pk)
@@ -46,6 +49,7 @@ def edit(request,pk):
 #params search
 class moviesList(generics.ListAPIView):
     serializer_class = MovieSerializers
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
         queryset = Movies.objects.all()
         for x in self.request.GET :
