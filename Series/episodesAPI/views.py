@@ -58,3 +58,14 @@ class DeleteEpisode(generics.DestroyAPIView):
     lookup_field = 'pk'
     queryset = Episodes.objects.all()
     serializer_class = EpisodesSerializer
+
+
+class episodesList(generics.ListAPIView):
+    serializer_class = EpisodesSerializer
+    def get_queryset(self):
+        queryset = Episodes.objects.all()
+        for x in self.request.GET :
+            if(x=='sid'):
+                queryset = queryset.filter(series_id__exact=self.request.query_params.get('sid'))  
+
+        return queryset
