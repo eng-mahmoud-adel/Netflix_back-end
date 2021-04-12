@@ -54,15 +54,7 @@ class moviesList(generics.ListAPIView):
         queryset = Movies.objects.all()
         for x in self.request.GET :
             if(x=='name'):
-                queryset = queryset.filter(name__icontains=self.request.query_params.get('name'))
-            if(x=='rate'):
-                queryset = queryset.filter(rate=self.request.query_params.get('rate'))
-            if(x=='actor'):
-                queryset = queryset.filter(actors__name__icontains=self.request.query_params.get('actor'))    
-            if(x=='genre'):
-                queryset = queryset.filter(genres__name__iexact=self.request.query_params.get('genre'))    
-
-      
+            queryset = queryset.filter(name__icontains=self.request.query_params.get('name')) | queryset.filter(genres__name__iexact=self.request.query_params.get('name')) | queryset.filter(actors__name__icontains=self.request.query_params.get('name'))    
         return queryset
 
 
