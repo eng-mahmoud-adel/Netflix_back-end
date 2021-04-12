@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'Series',
     'corsheaders',
     'rest_auth',
+    'rest_auth.registration', 
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -162,9 +163,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-# Here we tell allauth to use our adapter from above
-ACCOUNT_ADAPTER = 'myapp.adapter.AccountAPIAdapter'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
