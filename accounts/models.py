@@ -21,5 +21,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 class Payment(models.Model):
     plan_type = models.CharField(max_length=50)
     price = models.IntegerField()
+    # todo >> move this relationship to user model
+    # create user model and extend from User
     user = models.ForeignKey(User, on_delete=models.CASCADE)
         
