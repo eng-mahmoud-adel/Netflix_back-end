@@ -9,13 +9,14 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class SeriesList(generics.ListAPIView):
-    queryset = 	Series.objects.all()
+    serializer_class = SeriesSerializer
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         queryset = Series.objects.all()
-        name=self.request.query_params.get('name')
-        if name is not None:
-            queryset = queryset.filter(name__icontains=name)
+        for x in self.request.GET :
+            if(x=='name'):
+                queryset = queryset.filter(name__icontains=self.request.query_params.get('name')) | queryset.filter(genre__name__iexact=self.request.query_params.get('name')) | queryset.filter(actors__name__icontains=self.request.query_params.get('name'))    
+      
         return queryset
 
 #class CreateSeries(generics.CreateAPIView):
