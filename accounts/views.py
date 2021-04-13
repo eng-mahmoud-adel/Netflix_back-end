@@ -6,6 +6,9 @@ from .serializers import ProfileSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import Profile
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from rest_auth.registration.views import SocialLoginView
 
 ###### logout the current authenticated user
 class Logout(APIView):
@@ -96,6 +99,13 @@ def update_delete_profile(request, id):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+###### Social login by google
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+    client_class = OAuth2Client
+    # callback_url = 'http://localhost:8000'
+    # callback_url = 'http://localhost:8000/api/accounts/auth/google/login/callback/'
 
 # class IsManager(BasePermission):
 #     # group = Group(name = "Manager")
