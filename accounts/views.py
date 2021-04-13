@@ -59,6 +59,7 @@ def profile(request, id):
 @api_view(['post'])
 def create_profile(request):
     serializer = ProfileSerializer(data=request.data)
+    print(request.data, request.user.id)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data,status=status.HTTP_201_CREATED)
