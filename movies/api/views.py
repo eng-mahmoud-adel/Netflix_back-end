@@ -4,10 +4,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-
+from rest_framework.decorators import  permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 
 @api_view(["GET","POST"])
+@permission_classes([IsAuthenticated,])
 def index(request):
     if request.method=='GET':
         movies = Movies.objects.all()
@@ -22,6 +24,7 @@ def index(request):
 
 
 @api_view(["GET","PUT","DELETE"])
+@permission_classes([IsAuthenticated,])
 def edit(request,pk):
     try:
         movie=Movies.objects.get(pk=pk)
@@ -46,18 +49,12 @@ def edit(request,pk):
 #params search
 class moviesList(generics.ListAPIView):
     serializer_class = MovieSerializers
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
         queryset = Movies.objects.all()
         for x in self.request.GET :
             if(x=='name'):
-                queryset = queryset.filter(name__icontains=self.request.query_params.get('name'))
-            if(x=='rate'):
-                queryset = queryset.filter(rate=self.request.query_params.get('rate'))
-            if(x=='actor'):
-                queryset = queryset.filter(actors__name__icontains=self.request.query_params.get('actor'))    
-            if(x=='genre'):
-                queryset = queryset.filter(genres__name__iexact=self.request.query_params.get('genre'))    
-
+            queryset = queryset.filter(name__icontains=self.request.query_params.get('name')) | queryset.filter(genres__name__iexact=self.request.query_params.get('name')) | queryset.filter(actors__name__icontains=self.request.query_params.get('name'))    
       
         return queryset
 

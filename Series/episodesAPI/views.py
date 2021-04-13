@@ -4,14 +4,19 @@ from .serializers import EpisodesSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework import generics
+from rest_framework.decorators import  permission_classes
+from rest_framework.permissions import IsAuthenticated
+
 
 @api_view(["GET",])
+@permission_classes([IsAuthenticated,])
 def index(request):
     episode = Episodes.objects.all()
     serializer = EpisodesSerializer(instance=episode, many=True)
     return Response(data=serializer.data,status=status.HTTP_200_OK)
 
 @api_view(["POST",])
+@permission_classes([IsAuthenticated,])
 def create(request):
     serializer = EpisodesSerializer(data=request.data)
     if serializer.is_valid():
@@ -26,6 +31,7 @@ def create(request):
     },status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["PUT",])
+@permission_classes([IsAuthenticated,])
 def update(request,pk):
     episode = Episodes.objects.get(pk=pk)
     serializer = EpisodesSerializer(data=request.data,instance=episode)
@@ -41,6 +47,7 @@ def update(request,pk):
     },status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["Delete",])
+@permission_classes([IsAuthenticated,])
 def delete(request,pk):
     episode = Episodes.objects.get(pk=pk)
     episode.delete()
@@ -50,17 +57,20 @@ def delete(request,pk):
     },status=status.HTTP_204_NO_CONTENT)
 
 class RetrieveEpisode(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
     lookup_field = 'pk'
     queryset = Episodes.objects.all()
     serializer_class = EpisodesSerializer
 
 class DeleteEpisode(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
     lookup_field = 'pk'
     queryset = Episodes.objects.all()
     serializer_class = EpisodesSerializer
 
 
 class episodesList(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = EpisodesSerializer
     def get_queryset(self):
         queryset = Episodes.objects.all()
