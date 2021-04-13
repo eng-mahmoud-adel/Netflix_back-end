@@ -11,7 +11,6 @@ class Series(models.Model):
     date = models.DateField()
     maturity_rating = models.CharField(max_length=5)
     img = models.URLField()
-    video = models.URLField()
     actors = models.ManyToManyField(Actors)
     genre = models.ManyToManyField(Genre)
     trailer = models.URLField()
