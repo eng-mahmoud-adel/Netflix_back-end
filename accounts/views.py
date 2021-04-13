@@ -55,8 +55,12 @@ def profile(request, id):
 @permission_classes([IsAuthenticated,])
 @api_view(['post'])
 def create_profile(request):
+    request.data._mutable = True
+    request.data.update({"user": request.user.id})
+    print(request.data)
+    # request.data._mutable = False
     serializer = ProfileSerializer(data=request.data)
-    print(request.data, request.user.id)
+    # request.data.update({"user": request.user.id})
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data,status=status.HTTP_201_CREATED)
@@ -73,6 +77,13 @@ def create_profile(request):
 def update_delete_profile(request, id):
     profile = Profile.objects.get(id = id)
     if request.method == 'PUT':
+
+        if not request.data._mutable:
+            request.data._mutable = True
+            request.data.update({"user": request.user.id})
+            print(request.data)
+            request.data._mutable = False
+
         serializer = ProfileSerializer(profile, data=request.data)
         if serializer.is_valid():
             serializer.save()
