@@ -18,9 +18,23 @@ def create_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
         print(str(instance.id))
 
+
+
+PLANS_CHOICES = [
+    ("Basic", "Basic"),
+    ("Standard", "Standard"),
+    ("Premium","Premium")
+]
+
+PRICES_CHOICES = [
+    (120, 120),
+    (165, 165),
+    (200,200)
+]
+
 class Payment(models.Model):
-    plan_type = models.CharField(max_length=50)
-    price = models.IntegerField()
+    plan_type = models.CharField(max_length=50, choices=PLANS_CHOICES)
+    price = models.FloatField(choices=PRICES_CHOICES)
     # todo >> move this relationship to user model
     # create user model and extend from User
     user = models.ForeignKey(User, on_delete=models.CASCADE)

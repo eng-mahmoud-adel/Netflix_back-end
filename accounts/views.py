@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics, viewsets 
-from .serializers import ProfileSerializer
+from .serializers import ProfileSerializer, PaymentSerializer 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import Profile
@@ -58,8 +58,12 @@ def profile(request, id):
 @permission_classes([IsAuthenticated,])
 @api_view(['post'])
 def create_profile(request):
+    request.data._mutable = True
+    request.data.update({"user": request.user.id})
+    print(request.data)
+    # request.data._mutable = False
     serializer = ProfileSerializer(data=request.data)
-    print(request.data, request.user.id)
+    # request.data.update({"user": request.user.id})
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data,status=status.HTTP_201_CREATED)
@@ -76,6 +80,13 @@ def create_profile(request):
 def update_delete_profile(request, id):
     profile = Profile.objects.get(id = id)
     if request.method == 'PUT':
+
+        if not request.data._mutable:
+            request.data._mutable = True
+            request.data.update({"user": request.user.id})
+            print(request.data)
+            request.data._mutable = False
+
         serializer = ProfileSerializer(profile, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -95,6 +106,28 @@ class GoogleLogin(SocialLoginView):
     client_class = OAuth2Client
     # callback_url = 'http://localhost:8000'
     # callback_url = 'http://localhost:8000/api/accounts/auth/google/login/callback/'
+
+
+
+###### create payment record for new user
+
+@permission_classes([IsAuthenticated,])
+@api_view(['post'])
+def create_payment(request):
+    # request.data._mutable = True
+    request.data.update({"user": request.user.id})
+    print(request.data)
+    # request.data._mutable = False
+    serializer = PaymentSerializer(data=request.data)
+    # request.data.update({"user": request.user.id})
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+    return Response(data={
+        "success":False,
+        "errors":serializer.errors
+    },status=status.HTTP_404_NOT_FOUND)
+
 
 # class IsManager(BasePermission):
 #     # group = Group(name = "Manager")

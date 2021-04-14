@@ -133,8 +133,8 @@ DATABASES = {
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'netflix',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'USER': 'django',
+        'PASSWORD': '123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
