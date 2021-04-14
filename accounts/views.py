@@ -114,12 +114,8 @@ class GoogleLogin(SocialLoginView):
 @permission_classes([IsAuthenticated,])
 @api_view(['post'])
 def create_payment(request):
-    # request.data._mutable = True
     request.data.update({"user": request.user.id})
-    print(request.data)
-    # request.data._mutable = False
     serializer = PaymentSerializer(data=request.data)
-    # request.data.update({"user": request.user.id})
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data,status=status.HTTP_201_CREATED)
