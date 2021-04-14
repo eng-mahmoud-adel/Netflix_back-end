@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -91,8 +92,8 @@ REST_FRAMEWORK = {
     # ]
 }
 
-
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -120,6 +121,8 @@ TEMPLATES = [
         },
     },
 ]
+
+ALLOWED_HOSTS = ['https://netflix-iti-project.herokuapp.com/']
 
 WSGI_APPLICATION = 'netflix.wsgi.application'
 
@@ -204,4 +207,9 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-# MEDIA_URL = "http://localhost:8000/media/"
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+# database for deployment
+prod_db  =  dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
