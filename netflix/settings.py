@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'l5$j(sg$0x!!6kxz32)3k*y@%)9=y40m^if@g^4lia)nxtvr%='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['netflix-iti-project.herokuapp.com']
 
 
 # Application definition
@@ -121,8 +121,6 @@ TEMPLATES = [
         },
     },
 ]
-
-ALLOWED_HOSTS = ['netflix-iti-project.herokuapp.com']
 
 WSGI_APPLICATION = 'netflix.wsgi.application'
 
