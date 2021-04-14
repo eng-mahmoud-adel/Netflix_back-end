@@ -122,7 +122,7 @@ TEMPLATES = [
     },
 ]
 
-ALLOWED_HOSTS = ['https://netflix-iti-project.herokuapp.com/']
+ALLOWED_HOSTS = ['netflix-iti-project.herokuapp.com']
 
 WSGI_APPLICATION = 'netflix.wsgi.application'
 
