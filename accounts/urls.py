@@ -9,6 +9,8 @@ urlpatterns=[
      # signup
      path('auth/register/', include('rest_auth.registration.urls')),
      path('auth/google/', views.GoogleLogin.as_view(), name='google_login'),
+     # payment create_payment
+     path("payment/create", views.create_payment),
      # profiles
      path('profiles/',views.profiles),
      path('profile/<int:id>',views.profile),
